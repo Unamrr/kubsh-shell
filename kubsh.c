@@ -189,7 +189,7 @@ void execute_command(char *input) {
 
 int main() {
 // ============      main() ============
-VFS: fprintf(stderr, "=== Starting kubsh with VFS support ===\n");
+fprintf(stderr, "=== Starting kubsh with VFS support ===\n");
 
 //    VFS   
 char vfs_path[512];
@@ -226,7 +226,7 @@ if (vfs_pid == 0) {
     sleep(1);
 } else {
     perror("Failed to fork for VFS");
-//}
+}
 //// ============    VFS ============
     //  9:  SIGHUP
     signal(SIGHUP, sig_handler);
@@ -317,5 +317,6 @@ else if (strcmp(input, "history") == 0) {
     //  4:    
     write_history(HISTORY_FILE);
     return 0;
+}
 }
 
