@@ -188,7 +188,7 @@ void execute_command(char *input) {
 }
 
 int main() {
- ============      main() ============
+// ============      main() ============
 VFS: fprintf(stderr, "=== Starting kubsh with VFS support ===\n");
 
 //    VFS   
