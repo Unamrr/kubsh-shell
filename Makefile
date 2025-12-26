@@ -28,7 +28,15 @@ test:
 	@echo "=== Tests completed ==="
 deb: kubsh vfs
 	mkdir -p pkg/DEBIAN pkg/usr/bin
-	cp kubsh vfs pkg/usr/bin
+	cp kubsh vfs pkg/usr/bin/
+	cat > pkg/DEBIAN/control << 'CONTROL_EOF'
+Package: kubsh
+Version: 1.0-1
+Architecture: amd64
+Maintainer: Student <student@example.com>
+Depends: libc6 (>= 2.31), libreadline8 (>= 8.0), fuse3
+Description: Custom shell with VFS support for user management
+CONTROL_EOF
 	dpkg-deb --build pkg kubsh_1.0_amd64.deb
 
 install: kubsh vfs
