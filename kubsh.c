@@ -318,5 +318,5 @@ else if (strcmp(input, "history") == 0) {
     write_history(HISTORY_FILE);
     return 0;
 }
-}
+
 
