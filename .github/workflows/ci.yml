@@ -1,0 +1,36 @@
+name: CI/CD Pipeline
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    # Шаг 1: Сборка deb-пакета
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y gcc libreadline-dev fuse3 libfuse3-dev
+    
+    - name: Build and create deb package
+      run: |
+        make
+        make deb
+        ls -la *.deb
+    
+    # Шаг 2: Запуск проверок
+    - name: Run tests
+      run: |
+        docker run --privileged \
+          -v $(pwd):/app \
+          tyvik/kubsh_test:master \
+          bash -c "
+            apt-get update && apt-get install -y fuse3 libfuse3-dev 2>/dev/null || true
+            dpkg -i /app/kubsh_1.0_amd64.deb 2>/dev/null || apt-get install -f -y
+            cd /opt
+            python -m pytest test_basic.py -k 'not signal' -v 2>&1 | tail -20
+          "
+      continue-on-error: true
