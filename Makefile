@@ -27,7 +27,7 @@ test:
 	@echo "\q" | ./kubsh 2>/dev/null && echo "+ quit works" || echo "quit failed"
 	@echo "=== Tests completed ==="
 deb: kubsh vfs
-	mkdir -p pkg/DEBIAN pkg/usr/bin
+	mkdir -p pkg/DEBIAN pkg/usr/bin/
 	cp kubsh vfs pkg/usr/bin/
 	cat > pkg/DEBIAN/control << 'CONTROL_EOF'
 Package: kubsh
